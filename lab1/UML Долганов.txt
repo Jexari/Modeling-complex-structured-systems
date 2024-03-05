@@ -1,0 +1,80 @@
+@startuml
+
+class User {
+  +username: String
+  +password: String
+}
+
+class Admin {
+  +manageUsers(): void
+  +modifyGrades(student: Student, newGrades: Marks): void
+  +assignTeacher(student: Student, newTeacher: Teacher): void
+  +viewStudentInfo(student: Student): void
+}
+
+interface IAuthService {
+  +login(username: String, password: String): boolean
+  +logout(): void
+}
+
+interface IBaseAuth {
+}
+
+class Student {
+  +viewGrades(): void
+}
+
+class Teacher {
+  +manageGrades(student: Student, newGrades: Marks): void
+  +viewStudentInfo(student: Student): void
+}
+
+class Marks {
+  +subject: String
+  +value: int
+  +date: Date
+}
+
+class GradingService {
+  +modifyGrades(student: Student, newGrades: Marks): void
+  +viewStudentInfo(student: Student): void
+}
+
+class StudentCabinet {
+  +viewGrades(): void
+}
+
+class TeacherCabinet {
+  +manageGrades(student: Student, newGrades: Marks): void
+  +viewStudentInfo(student: Student): void
+}
+
+class DatabaseRepos {
+  +storeStudentData(student: Student): void
+  +retrieveStudentData(username: String): Student
+  +storeTeacherData(teacher: Teacher): void
+  +retrieveTeacherData(username: String): Teacher
+  +storeGradesData(student: Student, grades: Marks): void
+  +retrieveGradesData(student: Student): Marks
+}
+
+User --|> Admin : Extends
+User --|> Student : Extends
+User --|> Teacher : Extends
+User --|> IAuthService  
+
+Admin ..|> GradingService : Use
+GradingService --|> Marks: Use
+Admin ..|> DatabaseRepos : Manages Data
+
+Student --|> StudentCabinet : Use
+
+Teacher --|> TeacherCabinet : Use
+
+Teacher ..|> GradingService : Use
+Teacher ..|> DatabaseRepos : Use
+IAuthService  <|.. IBaseAuth
+Marks <|.. Student: Use
+DatabaseRepos<|.. Marks: Use
+
+@enduml
