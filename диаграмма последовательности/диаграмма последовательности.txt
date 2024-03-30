@@ -1,0 +1,54 @@
+@startuml
+
+actor User
+actor Admin
+actor Teacher
+actor Student
+
+participant "Security System" as SecuritySystem
+participant "System" as System
+participant "Mark System" as MarkSystem
+participant Database
+
+User -> SecuritySystem: Logs in
+SecuritySystem -> Database: Authenticate user
+Database --> SecuritySystem: User authenticated
+SecuritySystem --> User: Authentication successful
+User -> System: Views grades
+System -> Database: Retrieve grades
+Database --> System: Grades data
+System --> User: Display grades
+
+User -> System: Views schedule
+System -> Database: Retrieve schedule
+Database --> System: Schedule data
+System --> User: Display schedule
+
+User -> System: Accesses resources
+System -> Database: Retrieve resources
+Database --> System: Resources data
+System --> User: Display resources
+
+Admin -> SecuritySystem: Logs in
+SecuritySystem -> Database: Authenticate user
+Database --> SecuritySystem: User authenticated
+SecuritySystem --> Admin: Authentication successful
+Admin -> MarkSystem: Manages grades
+MarkSystem -> Database: Retrieve student grades
+Database --> MarkSystem: Grades data
+MarkSystem --> Admin: Manage grades
+
+Teacher -> SecuritySystem: Logs in
+SecuritySystem -> Database: Authenticate user
+Database --> SecuritySystem: User authenticated
+SecuritySystem --> Teacher: Authentication successful
+Teacher -> MarkSystem: Views student info
+MarkSystem -> Database: Retrieve student info
+Database --> MarkSystem: Student info data
+MarkSystem --> Teacher: Display student info
+Teacher -> MarkSystem: Generates reports
+MarkSystem -> Database: Retrieve report data
+Database --> MarkSystem: Report data
+MarkSystem --> Teacher: Display reports
+
+@enduml
