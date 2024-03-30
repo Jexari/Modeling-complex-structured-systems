@@ -1,0 +1,60 @@
+@startuml
+
+actor User
+actor Admin
+actor Teacher
+actor Student
+
+User --> Admin : Communicates
+User --> Teacher : Communicates
+User --> Student : Communicates
+Admin --> Teacher : Communicates
+Admin --> Student : Communicates
+Teacher --> Student : Communicates
+
+rectangle "Security System" {
+  usecase "Login: User provides credentials and logs into the system" as SS_UC1
+  usecase "Logout: User logs out of the system" as SS_UC2
+  usecase "Change Password: User changes their password" as SS_UC3
+}
+
+rectangle "System" {
+  usecase "View Grades: User views their grades" as S_UC1
+  usecase "View Schedule: User views their schedule" as S_UC2
+  usecase "Access Resources: User accesses educational resources" as S_UC3
+}
+
+rectangle "Mark System" {
+  usecase "Manage Grades: Teacher or admin manages student grades" as MS_UC1
+  usecase "View Student Info: Teacher or admin views student information" as MS_UC2
+  usecase "Generate Reports: Teacher or admin generates reports" as MS_UC3
+}
+
+User --> SS_UC1 : Logs in
+User --> SS_UC2 : Logs out
+User --> SS_UC3 : Changes password
+Admin --> SS_UC1 : Logs in
+Admin --> SS_UC2 : Logs out
+Admin --> SS_UC3 : Changes password
+Teacher --> SS_UC1 : Logs in
+Teacher --> SS_UC2 : Logs out
+Teacher --> SS_UC3 : Changes password
+Student --> SS_UC1 : Logs in
+Student --> SS_UC2 : Logs out
+Student --> SS_UC3 : Changes password
+
+User --> S_UC1 : Views grades
+Student --> S_UC1 : Views grades
+User --> S_UC2 : Views schedule
+Student --> S_UC2 : Views schedule
+User --> S_UC3 : Accesses resources
+Student --> S_UC3 : Accesses resources
+
+Teacher --> MS_UC1 : Manages grades
+Admin --> MS_UC1 : Manages grades
+Teacher --> MS_UC2 : Views student info
+Student --> MS_UC2 : Views student info
+Teacher --> MS_UC3 : Generates reports
+Admin --> MS_UC3 : Generates reports
+
+@enduml
