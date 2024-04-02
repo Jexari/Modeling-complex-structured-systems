@@ -1,0 +1,68 @@
+@startuml
+
+[*] --> WaitingForAction: User starts interaction
+
+state WaitingForAction {
+  [*] --> WaitingForCredentials: User logs in
+  WaitingForCredentials --> InputCredentials: Provide credentials
+  InputCredentials --> [*]: Cancel
+  InputCredentials --> CheckingCredentials: Submit
+  WaitingForCredentials --> InputNewPassword: Request to change password
+  InputNewPassword --> [*]: Cancel
+  InputNewPassword --> ChangingPassword: Submit
+}
+
+state CheckingCredentials {
+  [*] --> ValidateCredentials: System checks credentials
+  ValidateCredentials --> Authenticated: Credentials valid
+  ValidateCredentials --> Error: Credentials invalid
+}
+
+state Authenticated {
+  [*] --> LoggedIn: User authenticated successfully
+}
+
+state Error {
+  [*] --> ErrorPrompt: Display error message
+  ErrorPrompt --> WaitingForCredentials: Retry
+}
+
+state LoggedIn {
+  [*] --> [*]: User interacts with the system
+}
+
+state ChangingPassword {
+  [*] --> InputNewPassword: User provides new password
+  InputNewPassword --> [*]: Cancel
+  InputNewPassword --> UpdatePassword: Submit
+}
+
+state UpdatePassword {
+  [*] --> PasswordUpdated: System updates password
+}
+
+state PasswordUpdated {
+  [*] --> LoggedIn: Password updated successfully
+}
+
+state ViewingGrades {
+  [*] --> RetrieveGrades: System retrieves grades
+  RetrieveGrades --> [*]: Display grades
+}
+
+state ViewingSchedule {
+  [*] --> RetrieveSchedule: System retrieves schedule
+  RetrieveSchedule --> [*]: Display schedule
+}
+
+state ViewingStudentInfo {
+  [*] --> RetrieveStudentInfo: System retrieves student info
+  RetrieveStudentInfo --> [*]: Display student info
+}
+
+state GeneratingReports {
+  [*] --> GenerateReports: System generates reports
+  GenerateReports --> [*]: Display reports
+}
+
+@enduml
