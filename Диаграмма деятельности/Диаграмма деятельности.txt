@@ -1,0 +1,90 @@
+@startuml
+
+Start;
+
+if (User logs in) then (yes)
+  Authenticate user;
+  if (User authenticated) then (yes)
+    Retrieve grades;
+    if (Grades retrieved successfully) then (yes)
+      Display grades;
+    else (no)
+      Display error message;
+    endif
+  else (no)
+    Display authentication error message;
+  endif
+else (no)
+  Exit;
+endif
+
+if (User wants to view schedule) then (yes)
+  Retrieve schedule;
+  if (Schedule retrieved successfully) then (yes)
+    Display schedule;
+  else (no)
+    Display error message;
+  endif
+else (no)
+  stop
+endif
+
+if (User wants to access resources) then (yes)
+  Retrieve resources;
+  if (Resources retrieved successfully) then (yes)
+    Display resources;
+  else (no)
+    Display error message;
+  endif
+else (no)
+  stop
+endif
+
+if (User wants to change password) then (yes)
+  Change password;
+  if (Password changed successfully) then (yes)
+    Display success message;
+  else (no)
+    Display error message;
+  endif
+else (no)
+  stop
+endif
+
+if (User is admin) then (yes)
+  if (Admin wants to manage grades) then (yes)
+    Manage grades;
+    if (Grades managed successfully) then (yes)
+      Display success message;
+    else (no)
+      Display error message;
+    endif
+  endif
+else (no)
+  stop
+endif
+
+if (User is teacher) then (yes)
+  if (Teacher wants to view student info) then (yes)
+    View student info;
+    if (Info retrieved successfully) then (yes)
+      Display student info;
+    else (no)
+      Display error message;
+    endif
+  endif
+  if (Teacher wants to generate reports) then (yes)
+    Generate reports;
+    if (Reports generated successfully) then (yes)
+      Display reports;
+    else (no)
+      Display error message;
+    endif
+  endif
+else (no)
+  stop
+endif
+
+End;
+
+@enduml
